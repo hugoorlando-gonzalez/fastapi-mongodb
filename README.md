@@ -2,10 +2,6 @@
 
 ![](https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png)
 
-## Doc
-
-![Doc](https://fastapi.tiangolo.com/)
-
 ## Instalacion
 
 ### Python3
