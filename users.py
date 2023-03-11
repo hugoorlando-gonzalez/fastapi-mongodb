@@ -6,8 +6,6 @@ app = FastAPI()
 # Entidad user
 
 # BaseModel nos da la capacidad de crear una entidad y tratarlos de diferentes formas
-
-
 class User(BaseModel):
     # definimos los parametros que tendran los usuarios
     id: int
@@ -75,8 +73,6 @@ async def user_by_id(id: int):
 
 
 # Agregar usuarios
-
-
 @app.post("/users/")
 async def add_user(user: User):  # parametro user de tipo User
     user_id = search_user(user.id)
@@ -86,6 +82,35 @@ async def add_user(user: User):  # parametro user de tipo User
         return {"message": "El usuario ya existe"}
 
     users_fake_db.append(user)
+    return user
+
+@app.put("/users/")
+async def update_user(user: User):
+    found = False
+
+    for index, saved_user in enumerate(users_fake_db):
+        if saved_user.id == user.id:
+            users_fake_db[index] = user
+            found = True
+
+    if not found:
+        return {"message": "No se ha actualizado al usuario"}
+    else:
+        return user
+
+@app.delete("/users/{id}")
+async def user_by_id(id: int):
+    found = False
+
+    for index, user in enumerate(users_fake_db):
+        if user.id == id:
+            del users_fake_db[index]
+            found = True
+
+    if not found:
+        return {"message": "No se ha actualizado al usuario"}
+    else:
+        return user
 
 
 def search_user(id: int):
